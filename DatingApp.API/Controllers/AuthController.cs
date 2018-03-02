@@ -47,8 +47,6 @@ namespace DatingApp.API.Controllers
         [HttpPost("login")]
         public async Task<IActionResult> Login([FromBody] UserForLoginDto userForLoginDto)
         {
-            throw new Exception("throw new error");
-
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
 
