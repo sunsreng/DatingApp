@@ -10,16 +10,22 @@ export class AuthService {
   constructor(private http: Http) {}
 
   login(model: any) {
-    return this.http.post(this.baseUrl + 'login', model, this.requestOptions()).map((response: Response) => {
+    return this.http
+      .post(this.baseUrl + 'login', model, this.requestOptions())
+      .map((response: Response) => {
         const user = response.json();
         if (user && user.tokenString) {
-            localStorage.setItem('token', user.tokenString);
+          localStorage.setItem('token', user.tokenString);
         }
-    });
+      });
   }
 
   register(model: any) {
-    return this.http.post(this.baseUrl + 'register', model, this.requestOptions());
+    return this.http.post(
+      this.baseUrl + 'register',
+      model,
+      this.requestOptions()
+    );
   }
 
   private requestOptions() {
