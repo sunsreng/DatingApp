@@ -25,9 +25,9 @@ export class MemberDetailComponent implements OnInit {
     this.route.data.subscribe(data => {
       this.user = data['user'];
     });
-    this.route.queryParams.subscribe(params => {
-      this.memberTabs.tabs[params['tab']].active = true;
-    });
+    // this.route.queryParams.subscribe(params => {
+    //   this.memberTabs.tabs[params['tab']].active = true;
+    // });
 
     this.galleryOptions = [{
       width: '500px',
