@@ -11,6 +11,8 @@ import { PaginationModule } from 'ngx-bootstrap/pagination';
 import { TabsModule } from 'ngx-bootstrap/tabs/tabs.module';
 import { NgxGalleryModule } from 'ngx-gallery';
 import { TimeAgoPipe } from 'time-ago-pipe';
+import { JwtModule } from '@auth0/angular-jwt';
+import { HttpClientModule } from '@angular/common/http';
 
 import { AuthGuard } from './_guards/auth.guard';
 import { PreventUnsavedChanges } from './_guards/prevent-unsaved-changes.guard';
@@ -23,7 +25,6 @@ import { AlertifyService } from './_services/alertify.service';
 import { AuthService } from './_services/auth.service';
 import { UserService } from './_services/user.service';
 import { AppComponent } from './app.component';
-import { AuthModule } from './auth/auth.module';
 import { HomeComponent } from './home/home.component';
 import { ListsComponent } from './lists/lists.component';
 import { MemberCardComponent } from './members/member-card/member-card.component';
@@ -36,6 +37,16 @@ import { MessagesComponent } from './messages/messages.component';
 import { NavComponent } from './nav/nav.component';
 import { RegisterComponent } from './register/register.component';
 import { appRoutes } from './routes';
+import { ErrorInterceptorProvider } from './_services/error.interceptor';
+
+export function getAccessToken(): string {
+  return localStorage.getItem('token');
+}
+
+export const jwtConfig = {
+  tokenGetter: getAccessToken,
+  whitelistedDomains: ['localhost:5000']
+};
 
 @NgModule({
   declarations: [
@@ -59,14 +70,17 @@ import { appRoutes } from './routes';
     FormsModule,
     BsDropdownModule.forRoot(),
     RouterModule.forRoot(appRoutes),
-    AuthModule,
     TabsModule.forRoot(),
     NgxGalleryModule,
     FileUploadModule,
     ReactiveFormsModule,
     BsDatepickerModule.forRoot(),
     PaginationModule.forRoot(),
-    ButtonsModule.forRoot()
+    ButtonsModule.forRoot(),
+    HttpClientModule,
+    JwtModule.forRoot({
+      config: jwtConfig
+    })
   ],
   providers: [
     AuthService,
@@ -78,7 +92,8 @@ import { appRoutes } from './routes';
     MemberEditResolver,
     PreventUnsavedChanges,
     ListsResolver,
-    MessagesResolver
+    MessagesResolver,
+    ErrorInterceptorProvider
   ],
   bootstrap: [AppComponent]
 })

@@ -1,6 +1,6 @@
 <div class="panel panel-primary">
   <div class="panel-body">
-    <div *ngIf="messages.length === 0">
+    <div *ngIf="messages?.length === 0">
       <p>No messages yet... say hi my using the message box below</p>
     </div>
 
@@ -40,7 +40,7 @@
               <p>{{message.content}}</p>
             </div>
           </div>
-  
+
       </li>
     </ul>
 
@@ -48,8 +48,8 @@
   <div class="panel-footer">
     <form #messageForm="ngForm" (ngSubmit)="messageForm.valid && sendMessage()">
       <div class="input-group">
-        <input type="text" 
-          class="form-control input-sm" 
+        <input type="text"
+          class="form-control input-sm"
           required
           name="content"
           [(ngModel)]="newMessage.content"
